@@ -1,5 +1,6 @@
 package me.pwcong.findobj.ui.fragment;
 
+import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,11 +16,11 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import me.pwcong.findobj.MyApplication;
 import me.pwcong.findobj.R;
-import me.pwcong.findobj.adapter.BaseObjectAdapter;
+import me.pwcong.findobj.adapter.MyFindFragmentAdapter;
 import me.pwcong.findobj.base.BaseFragment;
+import me.pwcong.findobj.base.BaseObject;
 import me.pwcong.findobj.bean.Lost;
 import me.pwcong.findobj.conf.Constants;
-import me.pwcong.findobj.listener.OnListFragmentInteractionListener;
 
 /**
  * Created by pwcong on 2016/7/18.
@@ -30,14 +31,13 @@ public class MyFindFragment extends BaseFragment{
     SwipeRefreshLayout swipeRefreshLayout;
 
     private List<Lost> lostList;
-    private OnListFragmentInteractionListener mListener;
+    private MyFindFragmentListener mListener;
 
-    public MyFindFragment(OnListFragmentInteractionListener listener){
-        mListener=listener;
+    public MyFindFragment(){
     }
 
-    public static MyFindFragment newInstance(OnListFragmentInteractionListener listener){
-        return new MyFindFragment(listener);
+    public static MyFindFragment newInstance(){
+        return new MyFindFragment();
     }
 
     @Override
@@ -85,10 +85,26 @@ public class MyFindFragment extends BaseFragment{
                     Toast.makeText(getActivity(),"查询失败",Toast.LENGTH_SHORT).show();
                 }
 
-                recyclerView.setAdapter(new BaseObjectAdapter(lostList,mListener));
+                recyclerView.setAdapter(new MyFindFragmentAdapter(lostList,mListener));
 
             }
         });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener= (MyFindFragmentListener) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener=null;
+    }
+
+    public interface MyFindFragmentListener{
+        void onMyFindFragmentInteraction(BaseObject baseObject);
     }
 
 

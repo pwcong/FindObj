@@ -11,17 +11,17 @@ import java.util.List;
 import me.pwcong.findobj.R;
 import me.pwcong.findobj.base.BaseObject;
 import me.pwcong.findobj.bean.Lost;
-import me.pwcong.findobj.listener.OnListFragmentInteractionListener;
+import me.pwcong.findobj.ui.fragment.FindSquareFragment;
 
 /**
  * Created by pwcong on 2016/7/17.
  */
-public class BaseObjectAdapter extends RecyclerView.Adapter<BaseObjectAdapter.ViewHolder>{
+public class FindSquareFragmentAdapter extends RecyclerView.Adapter<FindSquareFragmentAdapter.ViewHolder>{
 
     private final List<Lost> lostList;
-    private final OnListFragmentInteractionListener mListener;
+    private final FindSquareFragment.FindSquareFragmentListener mListener;
 
-    public BaseObjectAdapter(List<Lost> lostList, OnListFragmentInteractionListener mListener) {
+    public FindSquareFragmentAdapter(List<Lost> lostList, FindSquareFragment.FindSquareFragmentListener mListener) {
         this.lostList = lostList;
         this.mListener = mListener;
     }
@@ -45,7 +45,7 @@ public class BaseObjectAdapter extends RecyclerView.Adapter<BaseObjectAdapter.Vi
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onListFragmentInteraction(holder.baseObject);
+                mListener.onFindSquareFragmentInteraction(holder.baseObject);
             }
         });
 

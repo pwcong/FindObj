@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import cn.bmob.v3.BmobUser;
 import me.pwcong.findobj.bean.User;

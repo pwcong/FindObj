@@ -1,10 +1,8 @@
 package me.pwcong.findobj.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,17 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import me.pwcong.findobj.MyApplication;
 import me.pwcong.findobj.R;
 import me.pwcong.findobj.base.BaseActivity;
 import me.pwcong.findobj.base.BaseObject;
-import me.pwcong.findobj.conf.Constants;
-import me.pwcong.findobj.listener.OnListFragmentInteractionListener;
 import me.pwcong.findobj.ui.fragment.FindSquareFragment;
 import me.pwcong.findobj.ui.fragment.MyFindFragment;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener,FindSquareFragment.FindSquareFragmentListener,MyFindFragment.MyFindFragmentListener{
 
     List<Fragment> fragments=new ArrayList<Fragment>();
 
@@ -77,18 +72,8 @@ public class MainActivity extends BaseActivity
     }
 
     private void initFragments(){
-        fragments.add(FindSquareFragment.newInstance(new OnListFragmentInteractionListener() {
-            @Override
-            public void onListFragmentInteraction(BaseObject baseObject) {
-                Toast.makeText(MainActivity.this,baseObject.getTitle(),Toast.LENGTH_SHORT).show();
-            }
-        }));
-        fragments.add(MyFindFragment.newInstance(new OnListFragmentInteractionListener() {
-            @Override
-            public void onListFragmentInteraction(BaseObject baseObject) {
-                Toast.makeText(MainActivity.this,baseObject.getTitle(),Toast.LENGTH_SHORT).show();
-            }
-        }));
+        fragments.add(FindSquareFragment.newInstance());
+        fragments.add(MyFindFragment.newInstance());
     }
 
 
@@ -155,4 +140,13 @@ public class MainActivity extends BaseActivity
 
     }
 
+    @Override
+    public void onMyFindFragmentInteraction(BaseObject baseObject) {
+        Toast.makeText(MainActivity.this,baseObject.getTitle()+" MyFind",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFindSquareFragmentInteraction(BaseObject baseObject) {
+        Toast.makeText(MainActivity.this,baseObject.getTitle()+" FindSquare",Toast.LENGTH_SHORT).show();
+    }
 }

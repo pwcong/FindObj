@@ -1,13 +1,8 @@
 package me.pwcong.findobj.ui.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,10 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.TimerTask;
 
 import butterknife.BindView;
-import cn.bmob.sms.listener.RequestSMSCodeListener;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.exception.BmobException;

@@ -1,5 +1,6 @@
 package me.pwcong.findobj.ui.fragment;
 
+import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,11 +15,11 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import me.pwcong.findobj.R;
-import me.pwcong.findobj.adapter.BaseObjectAdapter;
+import me.pwcong.findobj.adapter.FindSquareFragmentAdapter;
 import me.pwcong.findobj.base.BaseFragment;
+import me.pwcong.findobj.base.BaseObject;
 import me.pwcong.findobj.bean.Lost;
 import me.pwcong.findobj.conf.Constants;
-import me.pwcong.findobj.listener.OnListFragmentInteractionListener;
 
 /**
  * Created by pwcong on 2016/7/17.
@@ -28,15 +29,16 @@ public class FindSquareFragment extends BaseFragment {
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
 
-    private OnListFragmentInteractionListener mListener;
+    private FindSquareFragmentListener mListener;
     private List<Lost> lostList;
 
-    public FindSquareFragment(OnListFragmentInteractionListener listener){
-        mListener=listener;
+    public FindSquareFragment(){
+
     }
 
-    public static FindSquareFragment newInstance(OnListFragmentInteractionListener listener){
-        return new FindSquareFragment(listener);
+
+    public static FindSquareFragment newInstance(){
+        return new FindSquareFragment();
     }
 
 
@@ -67,11 +69,24 @@ public class FindSquareFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener=(FindSquareFragmentListener)context;
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener=null;
+    }
+
     public void refreshData(){
 
         lostList=new ArrayList<Lost>();
         BmobQuery<Lost> query=new BmobQuery<Lost>();
-        query.order("-createdAt");
+        query.order("-createAt");
         query.setLimit(Constants.DATA_LIMIT);
         query.findObjects(new FindListener<Lost>() {
             @Override
@@ -86,10 +101,14 @@ public class FindSquareFragment extends BaseFragment {
                     Toast.makeText(getActivity(),"查询失败",Toast.LENGTH_SHORT).show();
                 }
 
-                recyclerView.setAdapter(new BaseObjectAdapter(lostList,mListener));
+                recyclerView.setAdapter(new FindSquareFragmentAdapter(lostList,mListener));
 
             }
         });
+    }
+
+    public interface FindSquareFragmentListener{
+        void onFindSquareFragmentInteraction(BaseObject baseObject);
     }
 
 
