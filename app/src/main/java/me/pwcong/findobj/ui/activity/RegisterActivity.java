@@ -9,11 +9,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
@@ -23,6 +25,7 @@ import me.pwcong.findobj.MyApplication;
 import me.pwcong.findobj.R;
 import me.pwcong.findobj.base.BaseActivity;
 import me.pwcong.findobj.bean.User;
+import me.pwcong.findobj.bean.UserInfo;
 import me.pwcong.findobj.conf.Constants;
 import me.pwcong.findobj.utils.CheckUtil;
 
@@ -77,31 +80,31 @@ public class RegisterActivity extends BaseActivity {
                 final String username=et_username.getText().toString();
                 final String password=et_password.getText().toString();
                 final String telephone=et_telephone.getText().toString();
-                String code=et_code.getText().toString();
+                final String code=et_code.getText().toString();
 
                 if(!username.equals("")&&!password.equals("")&&!telephone.equals("")
                         && !code.equals("")&& CheckUtil.checkStringLength(username,Constants.USERNAME_LENGTH_LIMIT)
                         &&CheckUtil.checkStringLength(password,Constants.USERNAME_LENGTH_LIMIT)){
 
-                    BmobSMS.verifySmsCode(telephone, code, new UpdateListener() {
+                    final User _user=new User();
+                    _user.setUsername(username);
+                    _user.setPassword(password);
+                    _user.setMobilePhoneNumber(telephone);
+                    _user.setMobilePhoneNumberVerified(true);
+
+                    BmobQuery<User> query=new BmobQuery<User>();
+                    query.addWhereEqualTo(Constants.USERNAME,_user.getUsername());
+
+                    query.findObjects(new FindListener<User>() {
                         @Override
-                        public void done(BmobException e) {
+                        public void done(List<User> list, BmobException e) {
+                            if(null==e&&list.size()<1) {
 
-                            if(null==e){
-                                final User _user=new User();
-                                _user.setUsername(username);
-                                _user.setPassword(password);
-                                _user.setMobilePhoneNumber(telephone);
-                                _user.setMobilePhoneNumberVerified(true);
-
-                                BmobQuery<User> query=new BmobQuery<User>();
-                                query.addWhereEqualTo(Constants.USERNAME,_user.getUsername());
-
-                                query.findObjects(new FindListener<User>() {
+                                BmobSMS.verifySmsCode(telephone, code, new UpdateListener() {
                                     @Override
-                                    public void done(List<User> list, BmobException e) {
-                                        if(null==e&&list.size()<1) {
+                                    public void done(BmobException e) {
 
+                                        if(null==e){
                                             _user.signUp(new SaveListener<User>() {
                                                 @Override
                                                 public void done(User user, BmobException e) {
@@ -110,6 +113,8 @@ public class RegisterActivity extends BaseActivity {
 
                                                         MyApplication.setUser(user);
                                                         MyApplication.setLogin(true);
+
+                                                        tryCreateUserInfo(user);
                                                         redirectToMainActivity();
                                                     }
                                                     else {
@@ -117,17 +122,16 @@ public class RegisterActivity extends BaseActivity {
                                                     }
                                                 }
                                             });
-
-                                        }else {
-                                            Toast.makeText(RegisterActivity.this,R.string.error_exist_username,Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            Toast.makeText(RegisterActivity.this,R.string.error_check_code,Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
-                            }
-                            else {
-                                Toast.makeText(RegisterActivity.this,R.string.error_check_code,Toast.LENGTH_SHORT).show();
-                            }
 
+                            }else {
+                                Toast.makeText(RegisterActivity.this,R.string.error_exist_username,Toast.LENGTH_SHORT).show();
+                            }
                             progressBar_register.setVisibility(ProgressBar.GONE);
 
                         }
@@ -159,6 +163,26 @@ public class RegisterActivity extends BaseActivity {
             }
         });
     }
+
+    private void tryCreateUserInfo(User user){
+        final UserInfo userInfo=new UserInfo();
+        userInfo.setUserId(user.getObjectId());
+        userInfo.setName("新用户");
+        userInfo.setSummary("此人好懒，什么都没留下。");
+        userInfo.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if(null==e){
+                    Toast.makeText(RegisterActivity.this,R.string.success_create_user_info,Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(RegisterActivity.this,R.string.error_create_user_info,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
 
     public class TaskCodeButton extends AsyncTask<Void,Integer,Void>{
 

@@ -45,6 +45,9 @@
             android:launchMode="singleInstance"/>
         <activity android:name=".ui.activity.AddItemActivity"/>
 
+        <activity android:name=".ui.activity.UserInfoActivity"
+            android:label="@string/title_user_info"/>
+
 
     </application>
 

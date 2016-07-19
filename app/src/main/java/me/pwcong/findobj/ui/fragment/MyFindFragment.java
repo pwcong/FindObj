@@ -16,7 +16,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import me.pwcong.findobj.MyApplication;
 import me.pwcong.findobj.R;
-import me.pwcong.findobj.adapter.MyFindFragmentAdapter;
+import me.pwcong.findobj.adapter.BaseObjectItemAdapter;
 import me.pwcong.findobj.base.BaseFragment;
 import me.pwcong.findobj.base.BaseObject;
 import me.pwcong.findobj.bean.Lost;
@@ -31,7 +31,9 @@ public class MyFindFragment extends BaseFragment{
     SwipeRefreshLayout swipeRefreshLayout;
 
     private List<Lost> lostList;
-    private MyFindFragmentListener mListener;
+    private FindSquareFragment.BaseObjectItemListener mListener;
+
+    public String orderType=Constants.ORDER_BY_TIME_DESC;
 
     public MyFindFragment(){
     }
@@ -47,7 +49,7 @@ public class MyFindFragment extends BaseFragment{
 
     @Override
     protected void initVariable(View view) {
-        recyclerView=(RecyclerView)view.findViewById(R.id.rv_item);
+        recyclerView=(RecyclerView)view.findViewById(R.id.recycler_view);
         swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.layout_refresh);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -65,11 +67,12 @@ public class MyFindFragment extends BaseFragment{
         refreshData();
     }
 
+    @Override
     public void refreshData(){
 
         lostList=new ArrayList<Lost>();
         BmobQuery<Lost> query=new BmobQuery<Lost>();
-        query.order("-createdAt");
+        query.order(MyApplication.getOrderType());
         query.addWhereEqualTo(Constants.USERID, MyApplication.getUser().getObjectId());
         query.setLimit(Constants.DATA_LIMIT);
         query.findObjects(new FindListener<Lost>() {
@@ -77,6 +80,7 @@ public class MyFindFragment extends BaseFragment{
             public void done(List<Lost> list, BmobException e) {
                 if(null==e){
                     for (Lost lost:list){
+                        lost.setFlag(Constants.FLAG_MYFIND);
                         lostList.add(lost);
                         Log.e("Lost",lost.getTitle());
                     }
@@ -85,7 +89,7 @@ public class MyFindFragment extends BaseFragment{
                     Toast.makeText(getActivity(),"查询失败",Toast.LENGTH_SHORT).show();
                 }
 
-                recyclerView.setAdapter(new MyFindFragmentAdapter(lostList,mListener));
+                recyclerView.setAdapter(new BaseObjectItemAdapter(lostList,mListener));
 
             }
         });
@@ -94,7 +98,7 @@ public class MyFindFragment extends BaseFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener= (MyFindFragmentListener) context;
+        mListener= (FindSquareFragment.BaseObjectItemListener) context;
     }
 
     @Override
@@ -102,12 +106,6 @@ public class MyFindFragment extends BaseFragment{
         super.onDetach();
         mListener=null;
     }
-
-    public interface MyFindFragmentListener{
-        void onMyFindFragmentInteraction(BaseObject baseObject);
-    }
-
-
 
 
 }

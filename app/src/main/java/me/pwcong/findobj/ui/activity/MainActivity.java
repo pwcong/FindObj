@@ -1,6 +1,7 @@
 package me.pwcong.findobj.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -8,25 +9,38 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import me.drakeet.materialdialog.MaterialDialog;
+import me.pwcong.findobj.MyApplication;
 import me.pwcong.findobj.R;
 import me.pwcong.findobj.base.BaseActivity;
+import me.pwcong.findobj.base.BaseFragment;
 import me.pwcong.findobj.base.BaseObject;
+import me.pwcong.findobj.bean.UserInfo;
+import me.pwcong.findobj.conf.Constants;
+import me.pwcong.findobj.ui.dialog.SimpleItemListDialog;
 import me.pwcong.findobj.ui.fragment.FindSquareFragment;
 import me.pwcong.findobj.ui.fragment.MyFindFragment;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener,FindSquareFragment.FindSquareFragmentListener,MyFindFragment.MyFindFragmentListener{
+        implements NavigationView.OnNavigationItemSelectedListener,FindSquareFragment.BaseObjectItemListener{
 
-    List<Fragment> fragments=new ArrayList<Fragment>();
+    List<BaseFragment> fragments=new ArrayList<BaseFragment>();
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -36,6 +50,8 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+
+    LinearLayout ll_userInfo;
 
 
     @Override
@@ -65,7 +81,10 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_find_square);
 
+        initNavigationViewHeader(navigationView);
+
         initFragments();
+
         getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments.get(0)).commit();
 
 
@@ -74,6 +93,22 @@ public class MainActivity extends BaseActivity
     private void initFragments(){
         fragments.add(FindSquareFragment.newInstance());
         fragments.add(MyFindFragment.newInstance());
+    }
+
+    private void initNavigationViewHeader(NavigationView navigationView){
+        ll_userInfo= (LinearLayout) navigationView.getHeaderView(0);
+        TextView textView= (TextView) ll_userInfo.findViewById(R.id.tv_username);
+        textView.setText(MyApplication.getUser().getUsername());
+
+        ll_userInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle=new Bundle();
+                bundle.putBoolean(Constants.MYSELF,true);
+                bundle.putString(Constants.USERID, MyApplication.getUser().getObjectId());
+                redirectToUserInfoActivity(bundle);
+            }
+        });
     }
 
 
@@ -102,8 +137,14 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_order_time_asc) {
+
+            MyApplication.setOrderType(Constants.ORDER_BY_TIME_ASC);
+
             return true;
         }else if(id==R.id.action_order_time_desc){
+
+            MyApplication.setOrderType(Constants.ORDER_BY_TIME_DESC);
+
             return true;
         }
 
@@ -141,12 +182,64 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void onMyFindFragmentInteraction(BaseObject baseObject) {
-        Toast.makeText(MainActivity.this,baseObject.getTitle()+" MyFind",Toast.LENGTH_SHORT).show();
+    public void onBaseObjectItemInteraction(final BaseObject baseObject) {
+        if(baseObject.getFlag().equals(Constants.FLAG_FINDSQUARE)){
+
+            final SimpleItemListDialog dialog=new SimpleItemListDialog(MainActivity.this, getFindSquareDialogItemList(), new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    switch (i){
+                        case 0:
+                            Bundle bundle=new Bundle();
+                            bundle.putString(Constants.USERID,baseObject.getUserId());
+                            bundle.putBoolean(Constants.MYSELF,false);
+                            redirectToUserInfoActivity(bundle);
+                            break;
+                        case 1:break;
+                    }
+                }
+            });
+            dialog.setNegativeButton("取消", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        }
+        if (baseObject.getFlag().equals(Constants.FLAG_MYFIND)){
+            Log.e(Constants.FLAG_MYFIND,baseObject.getTitle());
+
+            final MaterialDialog dialog=new MaterialDialog(MainActivity.this);
+            dialog.setMessage("是否删除这条寻物启事？");
+            dialog.setPositiveButton("是", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.setNegativeButton("取消", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
     }
 
-    @Override
-    public void onFindSquareFragmentInteraction(BaseObject baseObject) {
-        Toast.makeText(MainActivity.this,baseObject.getTitle()+" FindSquare",Toast.LENGTH_SHORT).show();
+    public List<String> getFindSquareDialogItemList(){
+        List<String> list=new ArrayList<String>();
+        list.add("查看寻物用户");
+        list.add("告知寻物用户");
+        return list;
     }
+
+    private void redirectToUserInfoActivity(Bundle bundle){
+        Intent intent=new Intent(MainActivity.this,UserInfoActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
 }

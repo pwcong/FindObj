@@ -33,12 +33,18 @@ public abstract class Constants {
 
     public static final int RED_NORMAL=0x7f0c0138;
 
-    public static final String FLAG_LOST="lost";
+    public static final String FLAG_FINDSQUARE="findSquare";
 
-    public static final String FLAG_FOUND="found";
+    public static final String FLAG_MYFIND="myFind";
+
+    public static final String MYSELF="myself";
 
     public static final int TITLE_LENGTH_LIMIT=6;
     public static final int DESCRIBE_LENGTH_LIMIT=18;
+
+    public static final String ORDER_BY_TIME_ASC="createdAt";
+
+    public static final String ORDER_BY_TIME_DESC="-createdAt";
 
 
 

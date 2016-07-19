@@ -23,7 +23,6 @@ public abstract class BaseFragment extends Fragment {
 
         View view = inflater.inflate(setView(), container, false);
 
-
         initVariable(view);
 
 
@@ -33,5 +32,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int setView();
     protected abstract void initVariable(View view);
+
+    public abstract void refreshData();
 
 }

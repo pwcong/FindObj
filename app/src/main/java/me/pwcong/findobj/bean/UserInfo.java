@@ -1,14 +1,17 @@
 package me.pwcong.findobj.bean;
 
+import java.util.Date;
+
+import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobDate;
+
 /**
  * Created by pwcong on 2016/7/17.
  */
-public class UserInfo {
+public class UserInfo extends BmobObject{
     String userId;
     String name;
     String sex;
-    String birthday;
-    String phone;
     String email;
     String summary;
 
@@ -36,22 +39,6 @@ public class UserInfo {
         this.sex = sex;
     }
 
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -67,4 +54,7 @@ public class UserInfo {
     public void setSummary(String summary) {
         this.summary = summary;
     }
+
+
 }
+

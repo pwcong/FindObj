@@ -30,24 +30,28 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <net.qiujuer.genius.ui.widget.TextView
-                android:layout_weight="4"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/title"
-                android:textSize="40dp" />
-            <net.qiujuer.genius.ui.widget.EditText
-                android:layout_weight="2"
-                android:id="@+id/et_title"
-                android:hint="不少于6字"
-                android:textColor="@color/material_deep_teal_500"
-                android:layout_width="match_parent"
-                android:inputType="textMultiLine"
-                android:layout_height="wrap_content"
                 android:textSize="28dp" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="不少于6个字"
+                    android:inputType="textMultiLine"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
         <LinearLayout
@@ -55,18 +59,25 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <net.qiujuer.genius.ui.widget.TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/describe"
-                android:textSize="28dp" />
-            <net.qiujuer.genius.ui.widget.EditText
-                android:id="@+id/et_describe"
-                android:hint="不少于18个字"
-                android:inputType="textMultiLine"
+                android:textSize="20dp" />
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24dp" />
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_describe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="不少于18个字"
+                    android:inputType="textMultiLine"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
         <LinearLayout
@@ -74,18 +85,25 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <net.qiujuer.genius.ui.widget.TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone"
-                android:textSize="28dp" />
-            <net.qiujuer.genius.ui.widget.EditText
-                android:id="@+id/et_phone"
+                android:textSize="20dp" />
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="QQ、手机、邮箱等"
-                android:inputType="textMultiLine"
-                android:textSize="24dp" />
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="手机、邮箱等"
+                    android:inputType="textMultiLine"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 

@@ -9,8 +9,4 @@ import me.pwcong.findobj.conf.Constants;
  */
 public class Found extends BaseObject{
 
-    @Override
-    public String getFlag() {
-        return Constants.FLAG_FOUND;
-    }
 }

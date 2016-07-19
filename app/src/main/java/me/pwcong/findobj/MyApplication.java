@@ -9,6 +9,7 @@ import java.util.Set;
 
 import cn.bmob.v3.BmobUser;
 import me.pwcong.findobj.bean.User;
+import me.pwcong.findobj.conf.Constants;
 
 /**
  * Created by pwcong on 2016/7/15.
@@ -17,6 +18,9 @@ public class MyApplication extends Application{
 
     static Context context;
     static User user;
+    static String orderType= Constants.ORDER_BY_TIME_DESC;
+
+
     static boolean login;
     static Set<Activity> activityList=new HashSet<>();
 
@@ -25,7 +29,6 @@ public class MyApplication extends Application{
         super.onCreate();
         context=getApplicationContext();
         initVariable();
-
 
     }
 
@@ -41,7 +44,6 @@ public class MyApplication extends Application{
         }
         else {
             user=null;
-
             login=false;
         }
 
@@ -68,6 +70,13 @@ public class MyApplication extends Application{
         MyApplication.login = login;
     }
 
+    public static String getOrderType() {
+        return orderType;
+    }
+
+    public static void setOrderType(String orderType) {
+        MyApplication.orderType = orderType;
+    }
 
     public static void addActivity(Activity activity){
 

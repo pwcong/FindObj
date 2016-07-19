@@ -30,9 +30,10 @@
     <string name="success_register">注册成功</string>
     <string name="success_send_code">验证码发送成功</string>
     <string name="success_send_find">寻物启事发布成功</string>
+    <string name="success_create_user_info">用户信息创建成功</string>
 
     <string name="error_unknown">未知错误</string>
-    <string name="error_register">注册失败</string>
+    <string name="error_register">注册失败，可能是该手机已被注册使用</string>
     <string name="error_login">用户名或密码不正确</string>
     <string name="error_empty_username">用户名不能为空</string>
     <string name="error_empty_password">密码不能为空</string>
@@ -43,18 +44,25 @@
     <string name="error_check_code">验证码错误</string>
     <string name="error_send_code">验证码发送失败</string>
     <string name="error_send_find">发布失败，请检查您所填写的信息是否有误</string>
+    <string name="error_create_user_info">用户信息创建失败</string>
+
 
     <string name="title">主题：</string>
     <string name="title_login">登录</string>
     <string name="title_register">注册</string>
+    <string name="title_user_info">用户信息</string>
+    <string name="title_update_user_info">更新信息</string>
     <string name="title_other">其他</string>
     <string name="title_find_square">寻物广场</string>
     <string name="title_find_mine">我的寻物</string>
     <string name="title_find_message">寻物通知</string>
     <string name="title_find">寻物启事</string>
 
+    <string name="change">修改</string>
+
     <string name="tip_lost">未找到</string>
     <string name="tip_found">已找到</string>
+
 
 
 

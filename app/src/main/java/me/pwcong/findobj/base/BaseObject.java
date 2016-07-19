@@ -11,8 +11,14 @@ public abstract class BaseObject extends BmobObject{
     String describe;
     String phone;
     String userId;
+    String flag;
 
-    public abstract String getFlag();
+    public String getFlag() {
+        return flag;
+    }
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
 
     public String getTitle() {
         return title;

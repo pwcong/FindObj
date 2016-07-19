@@ -59,7 +59,7 @@
                         android:id="@+id/et_username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_username"
+                        android:hint="用户名（不少于6个字）"
                         android:inputType="text"
                         android:maxLines="1"
                         android:singleLine="true" />
@@ -74,7 +74,7 @@
                         android:id="@+id/et_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_password"
+                        android:hint="密码（不少于6个字）"
                         android:imeActionId="@+id/login"
                         android:imeActionLabel="@string/action_sign_in_short"
                         android:imeOptions="actionUnspecified"
@@ -104,8 +104,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <android.support.design.widget.TextInputLayout
-                        android:layout_weight="14"
-                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <AutoCompleteTextView
@@ -119,12 +119,12 @@
 
                     </android.support.design.widget.TextInputLayout>
                     <net.qiujuer.genius.ui.widget.Button
-                        android:layout_weight="2"
+                        android:layout_weight="3"
                         android:layout_gravity="end"
                         android:background="@color/grey_300"
                         android:id="@+id/btn_get_code"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/action_get_code"/>
 
                 </LinearLayout>

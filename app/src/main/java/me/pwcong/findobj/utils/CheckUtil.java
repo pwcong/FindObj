@@ -5,7 +5,7 @@ import android.util.Log;
 /**
  * Created by pwcong on 2016/7/18.
  */
-public class CheckUtil {
+public abstract class CheckUtil {
 
     public static char[] illegalCharacters="~!@#$%^&*()_+`-=[]{}|:\"<>?".toCharArray();
 
@@ -28,6 +28,21 @@ public class CheckUtil {
 
     public static boolean checkMail(String s){
         if(s.indexOf('@')<0)
+            return false;
+        else
+            return true;
+    }
+
+    public static String checkStringNull(String s,String defaultString){
+        if(s==null)
+            return defaultString;
+        else
+            return s;
+    }
+
+
+    public static boolean checkStringNotNull(String s){
+        if(s==null)
             return false;
         else
             return true;
