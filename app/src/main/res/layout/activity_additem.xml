@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:hint="不少于6个字"
                     android:inputType="textMultiLine"
-                    android:maxLines="1"
+                    android:maxLines="4"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
@@ -74,7 +74,8 @@
                     android:layout_height="wrap_content"
                     android:hint="不少于18个字"
                     android:inputType="textMultiLine"
-                    android:maxLines="1"
+                    android:text=""
+                    android:maxLines="8"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
@@ -100,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:hint="手机、邮箱等"
                     android:inputType="textMultiLine"
-                    android:maxLines="1"
+                    android:maxLines="4"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
