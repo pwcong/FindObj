@@ -101,6 +101,8 @@ public class LoginActivity extends BaseActivity{
                 redirectToRegisterActivity();
             }
         });
+
+
     }
 
     private void redirectToRegisterActivity(){

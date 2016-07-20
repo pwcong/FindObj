@@ -3,7 +3,6 @@ package me.pwcong.findobj.ui.activity;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,7 +82,7 @@ public class UserInfoActivity extends BaseActivity {
     public void refreshData(){
 
         final String userId = getIntent().getExtras().getString(Constants.USERID);
-        Log.e("Test",userId);
+
         BmobQuery<UserInfo> query=new BmobQuery<UserInfo>();
         query.addWhereEqualTo(Constants.USERID,userId);
         query.order("-createdAt");
@@ -98,7 +97,6 @@ public class UserInfoActivity extends BaseActivity {
                 }
                 else {
                     Toast.makeText(UserInfoActivity.this,"查询失败",Toast.LENGTH_SHORT).show();
-                    Log.e(UserInfoActivity.this.getLocalClassName(),e.getMessage());
                 }
             }
         });
@@ -120,14 +118,18 @@ public class UserInfoActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id=item.getItemId();
-        switch (id){
-            case 1:break;
-            default:
-                Toast.makeText(UserInfoActivity.this,"修改信息",Toast.LENGTH_SHORT).show();
-                break;
+        if(id==R.id.action_update){
+            redirectToUpdateUserInfoActivity();
         }
 
         return super.onOptionsItemSelected(item);
+
+    }
+
+    private void redirectToUpdateUserInfoActivity(){
+
+        startActivity(new Intent(UserInfoActivity.this,UpdateUserInfoActivity.class));
+        finish();
 
     }
 

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">寻物</string>
     <string name="code">验证码</string>
+    <string name="about">关于</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">用户名</string>
@@ -64,7 +65,7 @@
     <string name="tip_found">已找到</string>
 
 
-
+    <string name="action_logout">注销</string>
 
 
 

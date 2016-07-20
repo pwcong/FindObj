@@ -48,6 +48,12 @@
         <activity android:name=".ui.activity.UserInfoActivity"
             android:label="@string/title_user_info"/>
 
+        <activity android:name=".ui.activity.AboutActivity"
+            android:label="@string/about"/>
+
+        <activity android:name=".ui.activity.UpdateUserInfoActivity"
+            android:label="@string/title_update_user_info"/>
+
 
     </application>
 

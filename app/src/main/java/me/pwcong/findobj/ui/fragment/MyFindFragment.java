@@ -82,7 +82,6 @@ public class MyFindFragment extends BaseFragment{
                     for (Lost lost:list){
                         lost.setFlag(Constants.FLAG_MYFIND);
                         lostList.add(lost);
-                        Log.e("Lost",lost.getTitle());
                     }
 
                 }else {

@@ -17,7 +17,7 @@ public abstract class Constants {
 
     public static final int USERNAME_LENGTH_LIMIT=6;
 
-    public static final int DATA_LIMIT=30;
+    public static final int DATA_LIMIT=100;
 
     public static final String SMS_TEMPLATENAME="注册验证码";
 

@@ -102,7 +102,6 @@ public class FindSquareFragment extends BaseFragment {
                     for (Lost lost:list){
                         lost.setFlag(Constants.FLAG_FINDSQUARE);
                         lostList.add(lost);
-                        Log.e("Lost",lost.getTitle());
                     }
 
                 }else {

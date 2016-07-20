@@ -36,6 +36,8 @@ public class BaseObjectItemAdapter extends RecyclerView.Adapter<BaseObjectItemAd
         return new ViewHolder(view);
     }
 
+
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.baseObject=lostList.get(position);
@@ -50,6 +52,8 @@ public class BaseObjectItemAdapter extends RecyclerView.Adapter<BaseObjectItemAd
                 mListener.onBaseObjectItemInteraction(holder.baseObject);
             }
         });
+
+
 
     }
 

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,16 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 import me.drakeet.materialdialog.MaterialDialog;
 import me.pwcong.findobj.MyApplication;
 import me.pwcong.findobj.R;
 import me.pwcong.findobj.base.BaseActivity;
 import me.pwcong.findobj.base.BaseFragment;
 import me.pwcong.findobj.base.BaseObject;
-import me.pwcong.findobj.bean.UserInfo;
+import me.pwcong.findobj.bean.Lost;
 import me.pwcong.findobj.conf.Constants;
 import me.pwcong.findobj.ui.dialog.SimpleItemListDialog;
 import me.pwcong.findobj.ui.fragment.FindSquareFragment;
@@ -88,6 +86,8 @@ public class MainActivity extends BaseActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments.get(0)).commit();
 
 
+
+
     }
 
     private void initFragments(){
@@ -135,7 +135,6 @@ public class MainActivity extends BaseActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_order_time_asc) {
 
             MyApplication.setOrderType(Constants.ORDER_BY_TIME_ASC);
@@ -161,25 +160,44 @@ public class MainActivity extends BaseActivity
             toolbar.setTitle(R.string.title_find_square);
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragments.get(0)).commit();
             fab.setVisibility(FloatingActionButton.VISIBLE);
+            drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_find_mine) {
             toolbar.setTitle(R.string.title_find_mine);
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragments.get(1)).commit();
             fab.setVisibility(FloatingActionButton.VISIBLE);
+            drawer.closeDrawer(GravityCompat.START);
         } else if(id == R.id.nav_find_message){
             toolbar.setTitle(R.string.title_find_message);
             fab.setVisibility(FloatingActionButton.GONE);
+            drawer.closeDrawer(GravityCompat.START);
+        } else if(id == R.id.nav_info){
+            redirectToAboutActivity();
+        } else if(id == R.id.nav_logout){
+
+            final MaterialDialog dialog=new MaterialDialog(MainActivity.this);
+            dialog.setMessage("是否注销用户？");
+            dialog.setPositiveButton("是", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    redirectToLoginActivity();
+                }
+            });
+            dialog.setNegativeButton("取消", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+
+
         }
 
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private void redirectToAddItemActivity(){
 
-        Intent intent=new Intent(MainActivity.this,AddItemActivity.class);
-        startActivity(intent);
-
-    }
 
     @Override
     public void onBaseObjectItemInteraction(final BaseObject baseObject) {
@@ -208,14 +226,32 @@ public class MainActivity extends BaseActivity
 
             dialog.show();
         }
+
+
         if (baseObject.getFlag().equals(Constants.FLAG_MYFIND)){
-            Log.e(Constants.FLAG_MYFIND,baseObject.getTitle());
+
 
             final MaterialDialog dialog=new MaterialDialog(MainActivity.this);
             dialog.setMessage("是否删除这条寻物启事？");
             dialog.setPositiveButton("是", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    Lost lost=new Lost();
+                    lost.setObjectId(baseObject.getObjectId());
+                    lost.delete(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if(null==e){
+                                Toast.makeText(MainActivity.this,"已成功删除一条寻物启事",Toast.LENGTH_SHORT).show();
+                                fragments.get(1).refreshData();
+                            }
+                            else {
+                                Toast.makeText(MainActivity.this,"删除失败",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
                     dialog.dismiss();
                 }
             });
@@ -236,10 +272,26 @@ public class MainActivity extends BaseActivity
         return list;
     }
 
+    private void redirectToAddItemActivity(){
+
+        Intent intent=new Intent(MainActivity.this,AddItemActivity.class);
+        startActivity(intent);
+
+    }
+
     private void redirectToUserInfoActivity(Bundle bundle){
         Intent intent=new Intent(MainActivity.this,UserInfoActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+    private void redirectToAboutActivity(){
+        startActivity(new Intent(MainActivity.this,AboutActivity.class));
+    }
+    private void redirectToLoginActivity(){
+        MyApplication.setUser(null);
+        MyApplication.setLogin(false);
+        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        finish();
     }
 
 }
