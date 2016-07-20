@@ -30,7 +30,7 @@
     <string name="success_login">登陆成功</string>
     <string name="success_register">注册成功</string>
     <string name="success_send_code">验证码已成功发送</string>
-    <string name="success_send_find">寻物启事已成功发送</string>
+    <string name="success_send_find">寻物启事已成功发布</string>
     <string name="success_create_user_info">用户信息创建成功</string>
 
     <string name="error_unknown">未知错误</string>

@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="Hello"
                 android:textColor="@color/material_deep_teal_500"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
