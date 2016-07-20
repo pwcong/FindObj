@@ -8,7 +8,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import me.drakeet.materialdialog.MaterialDialog;
 import me.pwcong.findobj.MyApplication;
@@ -29,14 +29,21 @@ import me.pwcong.findobj.R;
 import me.pwcong.findobj.base.BaseActivity;
 import me.pwcong.findobj.base.BaseFragment;
 import me.pwcong.findobj.base.BaseObject;
+import me.pwcong.findobj.bean.FindMessage;
+import me.pwcong.findobj.bean.Found;
 import me.pwcong.findobj.bean.Lost;
 import me.pwcong.findobj.conf.Constants;
+import me.pwcong.findobj.listener.BaseObjectItemListener;
+import me.pwcong.findobj.listener.FindMessageItemListener;
 import me.pwcong.findobj.ui.dialog.SimpleItemListDialog;
+import me.pwcong.findobj.ui.dialog.SimpleMessageSendDialog;
+import me.pwcong.findobj.ui.fragment.FindMessageFragment;
 import me.pwcong.findobj.ui.fragment.FindSquareFragment;
 import me.pwcong.findobj.ui.fragment.MyFindFragment;
+import me.pwcong.findobj.utils.CheckUtil;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener,FindSquareFragment.BaseObjectItemListener{
+        implements NavigationView.OnNavigationItemSelectedListener,BaseObjectItemListener,FindMessageItemListener {
 
     List<BaseFragment> fragments=new ArrayList<BaseFragment>();
 
@@ -93,6 +100,7 @@ public class MainActivity extends BaseActivity
     private void initFragments(){
         fragments.add(FindSquareFragment.newInstance());
         fragments.add(MyFindFragment.newInstance());
+        fragments.add(FindMessageFragment.newInstance());
     }
 
     private void initNavigationViewHeader(NavigationView navigationView){
@@ -168,6 +176,7 @@ public class MainActivity extends BaseActivity
             drawer.closeDrawer(GravityCompat.START);
         } else if(id == R.id.nav_find_message){
             toolbar.setTitle(R.string.title_find_message);
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments.get(2)).commit();
             fab.setVisibility(FloatingActionButton.GONE);
             drawer.closeDrawer(GravityCompat.START);
         } else if(id == R.id.nav_info){
@@ -203,7 +212,9 @@ public class MainActivity extends BaseActivity
     public void onBaseObjectItemInteraction(final BaseObject baseObject) {
         if(baseObject.getFlag().equals(Constants.FLAG_FINDSQUARE)){
 
-            final SimpleItemListDialog dialog=new SimpleItemListDialog(MainActivity.this, getFindSquareDialogItemList(), new AdapterView.OnItemClickListener() {
+            final SimpleItemListDialog dialog=new SimpleItemListDialog(MainActivity.this, getFindSquareDialogItemList());
+
+            dialog.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     switch (i){
@@ -213,10 +224,35 @@ public class MainActivity extends BaseActivity
                             bundle.putBoolean(Constants.MYSELF,false);
                             redirectToUserInfoActivity(bundle);
                             break;
-                        case 1:break;
+                        case 1:
+
+                            final SimpleMessageSendDialog messageSendDialog=new SimpleMessageSendDialog(MainActivity.this,4,7);
+
+                            messageSendDialog.setTitle("通知");
+                            messageSendDialog.setPositiveButton("发送", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    sendFindMessage(baseObject, CheckUtil.checkStringNull(messageSendDialog.getEditText().getText().toString(),""));
+
+                                    messageSendDialog.dismiss();
+                                }
+                            });
+                            messageSendDialog.setNegativeButton("取消", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    messageSendDialog.dismiss();
+                                }
+                            });
+                            messageSendDialog.show();
+                            dialog.dismiss();
+
+                            break;
+                        default:break;
                     }
                 }
             });
+
             dialog.setNegativeButton("取消", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -232,26 +268,12 @@ public class MainActivity extends BaseActivity
 
 
             final MaterialDialog dialog=new MaterialDialog(MainActivity.this);
-            dialog.setMessage("是否删除这条寻物启事？");
+            dialog.setMessage("确认删除这条寻物启事？");
             dialog.setPositiveButton("是", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    Lost lost=new Lost();
-                    lost.setObjectId(baseObject.getObjectId());
-                    lost.delete(new UpdateListener() {
-                        @Override
-                        public void done(BmobException e) {
-                            if(null==e){
-                                Toast.makeText(MainActivity.this,"已成功删除一条寻物启事",Toast.LENGTH_SHORT).show();
-                                fragments.get(1).refreshData();
-                            }
-                            else {
-                                Toast.makeText(MainActivity.this,"删除失败",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
+                    removeLostItem(baseObject);
                     dialog.dismiss();
                 }
             });
@@ -265,11 +287,148 @@ public class MainActivity extends BaseActivity
         }
     }
 
+
+
+    @Override
+    public void onFindMessageItemInteraction(final FindMessage findMessage) {
+
+        final SimpleItemListDialog simpleItemListDialog=new SimpleItemListDialog(MainActivity.this,getFindMessageDialogItemList());
+        simpleItemListDialog.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                switch (i){
+                    case 0:
+                        Bundle bundle=new Bundle();
+                        bundle.putBoolean(Constants.MYSELF,false);
+                        bundle.putString(Constants.USERID,findMessage.getSendId());
+                        redirectToUserInfoActivity(bundle);
+
+                        break;
+
+                    case 1:
+
+                        final MaterialDialog deleteDialog=new MaterialDialog(MainActivity.this);
+                        deleteDialog.setMessage("确认删除这条告知？");
+                        deleteDialog.setPositiveButton("是", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                removeFindMessageItem(findMessage);
+                                deleteDialog.dismiss();
+                            }
+                        });
+                        deleteDialog.setNegativeButton("取消", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                deleteDialog.dismiss();
+                            }
+                        });
+                        deleteDialog.show();
+
+                        simpleItemListDialog.dismiss();
+                        break;
+
+                    default:break;
+                }
+
+            }
+        });
+        simpleItemListDialog.setNegativeButton("取消", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                simpleItemListDialog.dismiss();
+            }
+        });
+        simpleItemListDialog.show();
+
+
+
+    }
+
+
+
     public List<String> getFindSquareDialogItemList(){
         List<String> list=new ArrayList<String>();
-        list.add("查看寻物用户");
+        list.add("查看寻物用户信息");
         list.add("告知寻物用户");
         return list;
+    }
+
+    public List<String> getFindMessageDialogItemList(){
+        List<String> list=new ArrayList<String>();
+        list.add("查看告知用户信息");
+        list.add("删除该告知");
+        return list;
+    }
+
+
+    private void removeLostItem(final BaseObject baseObject){
+        Lost lost=new Lost();
+        lost.setObjectId(baseObject.getObjectId());
+        lost.delete(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if(null==e){
+                    Toast.makeText(MainActivity.this,"已成功删除一条寻物启事",Toast.LENGTH_SHORT).show();
+                    convertLostToFound(baseObject);
+                    fragments.get(1).refreshData();
+                }
+                else {
+                    Toast.makeText(MainActivity.this,"删除失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void convertLostToFound(BaseObject baseObject){
+        Found found=new Found();
+        found.setUserId(baseObject.getUserId());
+        found.setTitle(baseObject.getTitle());
+        found.setDescribe(baseObject.getDescribe());
+        found.setPhone(baseObject.getPhone());
+        found.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+
+            }
+        });
+
+    }
+
+
+    private void sendFindMessage(BaseObject baseObject,String reply){
+
+        FindMessage findMessage=new FindMessage();
+        findMessage.setTitle(baseObject.getTitle());
+        findMessage.setReply(reply);
+        findMessage.setUserId(baseObject.getUserId());
+        findMessage.setSendId(MyApplication.getUser().getObjectId());
+        findMessage.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if(null==e){
+                    Toast.makeText(MainActivity.this,"通知发送成功",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(MainActivity.this,"通知发送失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    private void removeFindMessageItem(FindMessage findMessage){
+        findMessage.delete(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if(null==e){
+                    Toast.makeText(MainActivity.this,"已成功删除一条告知",Toast.LENGTH_SHORT).show();
+                    fragments.get(2).refreshData();
+                }else {
+                    Toast.makeText(MainActivity.this,"删除失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void redirectToAddItemActivity(){

@@ -18,17 +18,29 @@ public class SimpleItemListDialog extends MaterialDialog{
 
     ListView listView;
 
-    public SimpleItemListDialog(Context context, List<String> itemList, AdapterView.OnItemClickListener listener) {
+
+    public SimpleItemListDialog(Context context, List<String> itemList) {
         super(context);
 
         ListAdapter adapter=new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,itemList);
 
         listView=new ListView(context);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(listener);
 
         setContentView(listView);
 
     }
 
+    public void setOnItemClickListener(AdapterView.OnItemClickListener listener){
+        listView.setOnItemClickListener(listener);
+
+    }
+
+    public ListView getListView() {
+        return listView;
+    }
+
+    public void setListView(ListView listView) {
+        this.listView = listView;
+    }
 }

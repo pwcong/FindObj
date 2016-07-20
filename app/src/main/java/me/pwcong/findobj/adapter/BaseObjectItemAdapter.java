@@ -11,6 +11,7 @@ import java.util.List;
 import me.pwcong.findobj.R;
 import me.pwcong.findobj.base.BaseObject;
 import me.pwcong.findobj.bean.Lost;
+import me.pwcong.findobj.listener.BaseObjectItemListener;
 import me.pwcong.findobj.ui.fragment.FindSquareFragment;
 import me.pwcong.findobj.ui.fragment.MyFindFragment;
 
@@ -20,9 +21,9 @@ import me.pwcong.findobj.ui.fragment.MyFindFragment;
 public class BaseObjectItemAdapter extends RecyclerView.Adapter<BaseObjectItemAdapter.ViewHolder>{
 
     private final List<Lost> lostList;
-    private final FindSquareFragment.BaseObjectItemListener mListener;
+    private final BaseObjectItemListener mListener;
 
-    public BaseObjectItemAdapter(List<Lost> lostList, FindSquareFragment.BaseObjectItemListener mListener) {
+    public BaseObjectItemAdapter(List<Lost> lostList, BaseObjectItemListener mListener) {
         this.lostList = lostList;
         this.mListener = mListener;
     }

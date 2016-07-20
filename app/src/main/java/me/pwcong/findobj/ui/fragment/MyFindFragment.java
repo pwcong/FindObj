@@ -21,6 +21,7 @@ import me.pwcong.findobj.base.BaseFragment;
 import me.pwcong.findobj.base.BaseObject;
 import me.pwcong.findobj.bean.Lost;
 import me.pwcong.findobj.conf.Constants;
+import me.pwcong.findobj.listener.BaseObjectItemListener;
 
 /**
  * Created by pwcong on 2016/7/18.
@@ -31,9 +32,8 @@ public class MyFindFragment extends BaseFragment{
     SwipeRefreshLayout swipeRefreshLayout;
 
     private List<Lost> lostList;
-    private FindSquareFragment.BaseObjectItemListener mListener;
+    private BaseObjectItemListener mListener;
 
-    public String orderType=Constants.ORDER_BY_TIME_DESC;
 
     public MyFindFragment(){
     }
@@ -82,6 +82,7 @@ public class MyFindFragment extends BaseFragment{
                     for (Lost lost:list){
                         lost.setFlag(Constants.FLAG_MYFIND);
                         lostList.add(lost);
+                        Log.e("Lost",lost.getTitle());
                     }
 
                 }else {
@@ -97,7 +98,7 @@ public class MyFindFragment extends BaseFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener= (FindSquareFragment.BaseObjectItemListener) context;
+        mListener= (BaseObjectItemListener) context;
     }
 
     @Override

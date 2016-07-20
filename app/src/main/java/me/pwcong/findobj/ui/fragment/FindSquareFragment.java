@@ -23,6 +23,7 @@ import me.pwcong.findobj.base.BaseFragment;
 import me.pwcong.findobj.base.BaseObject;
 import me.pwcong.findobj.bean.Lost;
 import me.pwcong.findobj.conf.Constants;
+import me.pwcong.findobj.listener.BaseObjectItemListener;
 import me.pwcong.findobj.ui.activity.MainActivity;
 
 /**
@@ -35,8 +36,6 @@ public class FindSquareFragment extends BaseFragment {
 
     private BaseObjectItemListener mListener;
     private List<Lost> lostList;
-
-    public String orderType=Constants.ORDER_BY_TIME_DESC;
 
     public FindSquareFragment(){
 
@@ -105,7 +104,7 @@ public class FindSquareFragment extends BaseFragment {
                     }
 
                 }else {
-                    Toast.makeText(getActivity(),"查询失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"列表获取失败",Toast.LENGTH_SHORT).show();
                 }
 
                 recyclerView.setAdapter(new BaseObjectItemAdapter(lostList,mListener));
@@ -113,11 +112,6 @@ public class FindSquareFragment extends BaseFragment {
             }
         });
     }
-
-    public interface BaseObjectItemListener{
-        void onBaseObjectItemInteraction(BaseObject baseObject);
-    }
-
 
 
 }

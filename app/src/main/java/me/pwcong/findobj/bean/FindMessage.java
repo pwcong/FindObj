@@ -10,6 +10,17 @@ public class FindMessage extends BmobObject {
     String title;
     String reply;
     String userId;
+    String sendId;
+
+    @Override
+    public String toString() {
+        return "FindMessage{" +
+                "title='" + title + '\'' +
+                ", reply='" + reply + '\'' +
+                ", userId='" + userId + '\'' +
+                ", sendId='" + sendId + '\'' +
+                '}';
+    }
 
     public String getTitle() {
         return title;
@@ -35,13 +46,11 @@ public class FindMessage extends BmobObject {
         this.userId = userId;
     }
 
+    public String getSendId() {
+        return sendId;
+    }
 
-    @Override
-    public String toString() {
-        return "FindMessage{" +
-                "title='" + title + '\'' +
-                ", reply='" + reply + '\'' +
-                ", userId='" + userId + '\'' +
-                '}';
+    public void setSendId(String sendId) {
+        this.sendId = sendId;
     }
 }
