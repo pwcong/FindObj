@@ -15,14 +15,21 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:layout_gravity="center_vertical"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_title_black_18dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title"
+                android:text="："
                 android:textAppearance="?attr/textAppearanceListItem" />
             <TextView
                 android:id="@+id/tv_title"
@@ -75,11 +82,18 @@
         android:layout_marginRight="6dp"
         android:orientation="horizontal"
         android:gravity="end">
-        <TextView
 
+        <ImageView
+            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/phone"
+            android:src="@drawable/ic_local_phone_black_18dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="："
             android:textAppearance="?attr/textAppearanceListItem" />
         <TextView
             android:id="@+id/tv_phone"

@@ -28,9 +28,6 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context=".ui.activity.LoginActivity">
 
-
-
-
         <!-- Login progress -->
         <ProgressBar
             android:id="@+id/register_progress"

@@ -17,6 +17,18 @@
         >
 
     </android.support.v7.widget.Toolbar>
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,14 +41,14 @@
         tools:context=".ui.activity.LoginActivity">
 
 
-        <!-- Login progress -->
-        <ProgressBar
-            android:id="@+id/login_progress"
-            style="?android:attr/progressBarStyleLarge"
+        <ImageView
+            android:layout_marginBottom="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone" />
+            android:src="@drawable/avatar"/>
+
+
+
 
 
             <LinearLayout
@@ -86,16 +98,40 @@
                     android:text="@string/action_sign_in_short"
                     android:background="@color/material_teal_200" />
 
-                <net.qiujuer.genius.ui.widget.Button
-                    android:id="@+id/btn_register"
-                    android:text="@string/action_register"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/grey_300"
+                <LinearLayout
+                    android:gravity="end"
+                    android:layout_marginTop="32dp"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="没有账号？"/>
+
+                    <TextView
+                        android:id="@+id/btn_register"
+                        android:textColor="@color/material_teal_500"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="8dp"
+                        android:text="注册一个"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
+
+
+
+
     </LinearLayout>
+
+
 </LinearLayout>
 
 

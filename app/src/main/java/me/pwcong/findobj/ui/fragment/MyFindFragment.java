@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import me.pwcong.findobj.MyApplication;
 import me.pwcong.findobj.R;
 import me.pwcong.findobj.adapter.BaseObjectItemAdapter;
 import me.pwcong.findobj.base.BaseFragment;
-import me.pwcong.findobj.base.BaseObject;
 import me.pwcong.findobj.bean.Lost;
 import me.pwcong.findobj.conf.Constants;
 import me.pwcong.findobj.listener.BaseObjectItemListener;
@@ -82,7 +80,6 @@ public class MyFindFragment extends BaseFragment{
                     for (Lost lost:list){
                         lost.setFlag(Constants.FLAG_MYFIND);
                         lostList.add(lost);
-                        Log.e("Lost",lost.getTitle());
                     }
 
                 }else {

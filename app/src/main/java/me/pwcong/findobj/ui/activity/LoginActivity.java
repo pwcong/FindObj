@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -26,7 +27,8 @@ public class LoginActivity extends BaseActivity{
     @BindView(R.id.et_username) EditText et_username;
     @BindView(R.id.et_password) EditText et_password;
     @BindView(R.id.btn_sign_in) Button btn_signIn;
-    @BindView(R.id.btn_register) Button btn_register;
+    @BindView(R.id.btn_register)
+    TextView btn_register;
     @BindView(R.id.login_progress) ProgressBar progressBar_login;
 
     @Override

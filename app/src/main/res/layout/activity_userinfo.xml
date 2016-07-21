@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ScrollView
+
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -35,12 +36,32 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/iv_avatar"
+                    android:src="@drawable/avatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
                 <LinearLayout
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/ic_perm_identity_black_18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
                     <TextView
-                        android:text="姓名："
+                        android:text=" 姓名："
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp" />
@@ -53,12 +74,19 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:gravity="center_vertical"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/ic_supervisor_account_black_18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                     <TextView
-                        android:text="性别："
+                        android:text=" 性别："
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp" />
@@ -72,12 +100,20 @@
 
 
                 <LinearLayout
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:gravity="center_vertical"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/ic_mail_outline_black_18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
                     <TextView
-                        android:text="邮箱："
+                        android:text=" 邮箱："
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp" />
@@ -91,12 +127,19 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/ic_border_color_black_18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                     <TextView
-                        android:text="简介："
+                        android:text=" 简介："
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp" />

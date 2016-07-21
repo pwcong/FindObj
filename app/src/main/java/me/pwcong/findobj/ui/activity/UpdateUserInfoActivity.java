@@ -128,7 +128,7 @@ public class UpdateUserInfoActivity extends BaseActivity {
                         }
 
                     }else {
-                        Toast.makeText(UpdateUserInfoActivity.this,"",Toast.LENGTH_SHORT).show();
+
                     }
 
                 }

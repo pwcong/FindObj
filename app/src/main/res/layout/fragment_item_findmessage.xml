@@ -21,15 +21,28 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <TextView
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="通知内容："
-                    android:textAppearance="?attr/textAppearanceListItem" />
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_text_fields_black_18dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="："
+                        android:textAppearance="?attr/textAppearanceListItem" />
+
+
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_reply"
                     android:layout_width="wrap_content"
@@ -47,11 +60,17 @@
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/ic_title_black_18dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="相关主题："
-                    android:textSize="14sp"/>
+                    android:text="："
+                    android:textAppearance="?attr/textAppearanceListItem" />
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"

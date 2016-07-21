@@ -91,8 +91,7 @@ public class MainActivity extends BaseActivity
         initFragments();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments.get(0)).commit();
-
-
+        MyApplication.setFragmentIdex(0);
 
 
     }
@@ -131,27 +130,24 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         if (id == R.id.action_order_time_asc) {
 
             MyApplication.setOrderType(Constants.ORDER_BY_TIME_ASC);
+            fragments.get(MyApplication.getFragmentIdex()).refreshData();
 
             return true;
         }else if(id==R.id.action_order_time_desc){
 
             MyApplication.setOrderType(Constants.ORDER_BY_TIME_DESC);
-
+            fragments.get(MyApplication.getFragmentIdex()).refreshData();
             return true;
         }
 
@@ -161,22 +157,24 @@ public class MainActivity extends BaseActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_find_square) {
             toolbar.setTitle(R.string.title_find_square);
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragments.get(0)).commit();
+            MyApplication.setFragmentIdex(0);
             fab.setVisibility(FloatingActionButton.VISIBLE);
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_find_mine) {
             toolbar.setTitle(R.string.title_find_mine);
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragments.get(1)).commit();
+            MyApplication.setFragmentIdex(1);
             fab.setVisibility(FloatingActionButton.VISIBLE);
             drawer.closeDrawer(GravityCompat.START);
         } else if(id == R.id.nav_find_message){
             toolbar.setTitle(R.string.title_find_message);
             getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments.get(2)).commit();
+            MyApplication.setFragmentIdex(2);
             fab.setVisibility(FloatingActionButton.GONE);
             drawer.closeDrawer(GravityCompat.START);
         } else if(id == R.id.nav_info){
@@ -309,7 +307,7 @@ public class MainActivity extends BaseActivity
                     case 1:
 
                         final MaterialDialog deleteDialog=new MaterialDialog(MainActivity.this);
-                        deleteDialog.setMessage("确认删除这条告知？");
+                        deleteDialog.setMessage("确认删除这条通知？");
                         deleteDialog.setPositiveButton("是", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -349,15 +347,15 @@ public class MainActivity extends BaseActivity
 
     public List<String> getFindSquareDialogItemList(){
         List<String> list=new ArrayList<String>();
-        list.add("查看寻物用户信息");
-        list.add("告知寻物用户");
+        list.add("查看Ta的信息");
+        list.add("我有线索，通知Ta");
         return list;
     }
 
     public List<String> getFindMessageDialogItemList(){
         List<String> list=new ArrayList<String>();
-        list.add("查看告知用户信息");
-        list.add("删除该告知");
+        list.add("查看Ta的信息");
+        list.add("删除该通知");
         return list;
     }
 

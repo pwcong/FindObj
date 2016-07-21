@@ -9,13 +9,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobSMS;
-import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
@@ -141,24 +139,28 @@ public class RegisterActivity extends BaseActivity {
 
                 if(username.equals("")){
                     Toast.makeText(RegisterActivity.this,R.string.error_empty_username,Toast.LENGTH_SHORT).show();
+                    progressBar_register.setVisibility(ProgressBar.GONE);
                 }
 
                 if(password.equals("")){
                     Toast.makeText(RegisterActivity.this,R.string.error_empty_password,Toast.LENGTH_SHORT).show();
+                    progressBar_register.setVisibility(ProgressBar.GONE);
                 }
 
                 if(telephone.equals("")){
                     Toast.makeText(RegisterActivity.this,R.string.error_empty_telephone,Toast.LENGTH_SHORT).show();
+                    progressBar_register.setVisibility(ProgressBar.GONE);
                 }
 
                 if(code.equals("")){
                     Toast.makeText(RegisterActivity.this,R.string.error_empty_code,Toast.LENGTH_SHORT).show();
+                    progressBar_register.setVisibility(ProgressBar.GONE);
 
                 }
                 if(!CheckUtil.checkStringLength(username,Constants.USERNAME_LENGTH_LIMIT)||!CheckUtil.checkStringLength(password,Constants.USERNAME_LENGTH_LIMIT)){
                     Toast.makeText(RegisterActivity.this,R.string.error_length_username_password,Toast.LENGTH_SHORT).show();
+                    progressBar_register.setVisibility(ProgressBar.GONE);
                 }
-                progressBar_register.setVisibility(ProgressBar.GONE);
 
             }
         });

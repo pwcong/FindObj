@@ -20,6 +20,8 @@ public class MyApplication extends Application{
     static User user;
     static String orderType= Constants.ORDER_BY_TIME_DESC;
 
+    static int fragmentIdex;
+
 
     static boolean login;
     static Set<Activity> activityList=new HashSet<>();
@@ -76,6 +78,15 @@ public class MyApplication extends Application{
 
     public static void setOrderType(String orderType) {
         MyApplication.orderType = orderType;
+    }
+
+
+    public static int getFragmentIdex() {
+        return fragmentIdex;
+    }
+
+    public static void setFragmentIdex(int fragmentIdex) {
+        MyApplication.fragmentIdex = fragmentIdex;
     }
 
     public static void addActivity(Activity activity){
