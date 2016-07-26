@@ -127,6 +127,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:gravity="center_vertical"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="16dp"
