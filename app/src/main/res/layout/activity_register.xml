@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        android:background="@color/material_teal_500"
         android:title="@string/title_register"
         app:titleTextColor="@android:color/background_light"
         >
@@ -134,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/action_submit"
-                    android:background="@color/material_teal_200" />
+                    android:background="@color/colorPrimary" />
 
                 <net.qiujuer.genius.ui.widget.Button
                     android:id="@+id/btn_cancel"
@@ -142,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/action_cancel"
-                    android:background="@color/material_grey_300" />
+                    android:background="#ffe0e0e0" />
 
             </LinearLayout>
         </ScrollView>
