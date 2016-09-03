@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:title="@string/title_register"
+        android:background="@color/colorPrimary"
         app:titleTextColor="@android:color/background_light"
         >
 
