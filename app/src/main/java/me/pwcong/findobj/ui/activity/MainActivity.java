@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +57,7 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    LinearLayout ll_userInfo;
+    RelativeLayout rl_userInfo;
 
 
     @Override
@@ -103,11 +104,11 @@ public class MainActivity extends BaseActivity
     }
 
     private void initNavigationViewHeader(NavigationView navigationView){
-        ll_userInfo= (LinearLayout) navigationView.getHeaderView(0);
-        TextView textView= (TextView) ll_userInfo.findViewById(R.id.tv_username);
+        rl_userInfo = (RelativeLayout) navigationView.getHeaderView(0);
+        TextView textView= (TextView) rl_userInfo.findViewById(R.id.tv_username);
         textView.setText(MyApplication.getUser().getUsername());
 
-        ll_userInfo.setOnClickListener(new View.OnClickListener() {
+        rl_userInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle=new Bundle();
@@ -420,7 +421,7 @@ public class MainActivity extends BaseActivity
             @Override
             public void done(BmobException e) {
                 if(null==e){
-                    Toast.makeText(MainActivity.this,"已成功删除一条告知",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,"已成功删除一条通知",Toast.LENGTH_SHORT).show();
                     fragments.get(2).refreshData();
                 }else {
                     Toast.makeText(MainActivity.this,"删除失败",Toast.LENGTH_SHORT).show();

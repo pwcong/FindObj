@@ -66,7 +66,14 @@
 
 
     <string name="action_logout">注销</string>
-
+    <string name="about_thanks">感谢你的使用</string>
+    <string name="about_thanks_content">这是我做的第一个APP——寻物APP，只提供了用户注册登录和寻物启事发布功能。\n(ง •̀_•́)ง </string>
+    <string name="source_code">源码</string>
+    <string name="github">Github</string>
+    <string name="about_source_code_content">第一次写的一个小项目，代码也较为冗余，但是对于新手学习来说不妨看看。\n(´・ω・`)</string>
+    <string name="blog">Blog</string>
+    <string name="here">这里</string>
+    <string name="about_here_content">版本：v1.0.0\n作者：Pwcong</string>
 
 
 </resources>
